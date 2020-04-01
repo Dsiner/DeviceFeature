@@ -52,9 +52,9 @@ public class NfcCompat {
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public void enableCardReader() {
         if (mDefaultAdapter != null) {
-            NfcAdapter.ReaderCallback mReaderCallback = new NfcAdapter.ReaderCallback() {
+            final NfcAdapter.ReaderCallback readerCallback = new NfcAdapter.ReaderCallback() {
                 @Override
-                public void onTagDiscovered(Tag tag) {
+                public synchronized void onTagDiscovered(Tag tag) {
                     Log.d(TAG, "onTagDiscovered: tag discovered " + tag);
                     if (mNfcCardCallback != null) {
                         mNfcCardCallback.onTagDiscovered(tag);
@@ -62,9 +62,9 @@ public class NfcCompat {
                 }
             };
             if (extra.getInt(NfcAdapter.EXTRA_READER_PRESENCE_CHECK_DELAY, 0) > 0) {
-                mDefaultAdapter.enableReaderMode(mActivity, mReaderCallback, READER_FLAG, extra);
+                mDefaultAdapter.enableReaderMode(mActivity, readerCallback, READER_FLAG, extra);
             } else {
-                mDefaultAdapter.enableReaderMode(mActivity, mReaderCallback, READER_FLAG, null);
+                mDefaultAdapter.enableReaderMode(mActivity, readerCallback, READER_FLAG, null);
             }
         }
     }
