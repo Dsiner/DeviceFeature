@@ -54,7 +54,7 @@ public class NfcCompat {
         if (mDefaultAdapter != null) {
             final NfcAdapter.ReaderCallback readerCallback = new NfcAdapter.ReaderCallback() {
                 @Override
-                public synchronized void onTagDiscovered(Tag tag) {
+                public void onTagDiscovered(Tag tag) {
                     Log.d(TAG, "onTagDiscovered: tag discovered " + tag);
                     if (mNfcCardCallback != null) {
                         mNfcCardCallback.onTagDiscovered(tag);
@@ -84,7 +84,7 @@ public class NfcCompat {
         if (tag != null) {
             Log.d(TAG, "dispatchIntent: tag discovered " + tag);
             if (mNfcCardCallback != null) {
-                mNfcCardCallback.onDispatchIntent(tag);
+                mNfcCardCallback.onTagDiscovered(tag);
             }
         }
     }

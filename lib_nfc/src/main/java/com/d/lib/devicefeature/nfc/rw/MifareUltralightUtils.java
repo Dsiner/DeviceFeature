@@ -3,6 +3,7 @@ package com.d.lib.devicefeature.nfc.rw;
 import android.nfc.Tag;
 import android.nfc.tech.MifareUltralight;
 
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 
@@ -19,10 +20,12 @@ public class MifareUltralightUtils {
         return Arrays.toString(tag.getTechList()).contains(MifareUltralight.class.getName());
     }
 
-    public static String readSerialNumber(Tag tag) {
-        MifareUltralight ultralight = MifareUltralight.get(tag);
+    public static MifareUltralight getMifareUltralight(final Tag tag) {
+        return MifareUltralight.get(tag);
+    }
+
+    public static String readSerialNumber(final MifareUltralight ultralight) throws IOException {
         try {
-            ultralight.connect();
             byte[] data = ultralight.readPages(0);
             byte[] serialNumber = new byte[7];
             serialNumber[0] = data[0];
@@ -32,24 +35,35 @@ public class MifareUltralightUtils {
             serialNumber[4] = data[5];
             serialNumber[5] = data[6];
             serialNumber[6] = data[7];
-            return Util.bytes2HexString(serialNumber);
+            return NfcUtils.bytes2HexString(serialNumber);
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            Util.closeQuietly(ultralight);
+            throw e;
         }
-        return null;
     }
 
-    public static void write(final int pageOffset, final Tag tag, final String text) {
-        MifareUltralight ultralight = MifareUltralight.get(tag);
+    public static String readContent(final MifareUltralight ultralight) throws IOException {
         try {
-            ultralight.connect();
+            byte[] page0 = ultralight.readPages(0);
+            byte[] page1 = ultralight.readPages(4);
+            byte[] page2 = ultralight.readPages(8);
+            byte[] page3 = ultralight.readPages(12);
+            byte[] content = NfcUtils.byteMerger(NfcUtils.byteMerger(page0, page1),
+                    NfcUtils.byteMerger(page2, page3));
+            return NfcUtils.bytes2HexString(content);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    public static void write(final MifareUltralight ultralight, final int pageOffset, final String text)
+            throws IOException {
+        try {
             ultralight.writePage(pageOffset, text.getBytes(Charset.forName("GB2312")));
         } catch (Throwable e) {
             e.printStackTrace();
-        } finally {
-            Util.closeQuietly(ultralight);
+            throw e;
         }
     }
 }

@@ -2,6 +2,7 @@ package com.d.devicefeature.activity;
 
 import android.content.Intent;
 import android.nfc.Tag;
+import android.nfc.tech.MifareUltralight;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,6 +15,10 @@ import com.d.lib.common.util.ToastUtils;
 import com.d.lib.devicefeature.nfc.NfcCompat;
 import com.d.lib.devicefeature.nfc.callback.NfcCardCallback;
 import com.d.lib.devicefeature.nfc.rw.MifareUltralightUtils;
+import com.d.lib.taskscheduler.TaskScheduler;
+import com.d.lib.taskscheduler.callback.Observer;
+import com.d.lib.taskscheduler.callback.Task;
+import com.d.lib.taskscheduler.schedule.Schedulers;
 
 public class NfcActivity extends BaseActivity<MvpBasePresenter> implements MvpView {
     private NfcCompat mNfcCompat;
@@ -56,17 +61,40 @@ public class NfcActivity extends BaseActivity<MvpBasePresenter> implements MvpVi
                 .enableSound(true)
                 .build();
         mNfcCompat.setNfcCardCallback(new NfcCardCallback() {
-            @Override
-            public void onDispatchIntent(@NonNull Tag tag) {
-
-            }
 
             @Override
             public void onTagDiscovered(@NonNull Tag tag) {
-                if (MifareUltralightUtils.isMifareUltralight(tag)) {
-                    String serialNumber = MifareUltralightUtils.readSerialNumber(tag);
-                    ToastUtils.toast(getApplicationContext(), "Serial number: " + serialNumber);
-                }
+                readTag(tag);
+            }
+
+            private void readTag(@NonNull final Tag tag) {
+                TaskScheduler.create(new Task<String>() {
+                    @Override
+                    public String run() {
+                        if (MifareUltralightUtils.isMifareUltralight(tag)) {
+                            try {
+                                MifareUltralight mifareUltralight = MifareUltralightUtils.getMifareUltralight(tag);
+                                mifareUltralight.connect();
+                                return MifareUltralightUtils.readSerialNumber(mifareUltralight);
+                            } catch (Throwable e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        return null;
+                    }
+                }).subscribeOn(Schedulers.io())
+                        .observeOn(Schedulers.mainThread())
+                        .subscribe(new Observer<String>() {
+                            @Override
+                            public void onNext(@NonNull String result) {
+                                ToastUtils.toast(getApplicationContext(), "Serial number: " + result);
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                ToastUtils.toast(getApplicationContext(), "Read error");
+                            }
+                        });
             }
 
             @Override

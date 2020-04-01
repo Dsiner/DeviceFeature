@@ -2,7 +2,7 @@ package com.d.lib.devicefeature.nfc.rw;
 
 import java.io.Closeable;
 
-public class Util {
+public class NfcUtils {
     private static final char[] HEX_DIGITS =
             {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 
@@ -26,6 +26,13 @@ public class Util {
                     + Character.digit(s.charAt(i + 1), 16));
         }
         return data;
+    }
+
+    public static byte[] byteMerger(final byte[] byte_1, final byte[] byte_2) {
+        byte[] byte_3 = new byte[byte_1.length + byte_2.length];
+        System.arraycopy(byte_1, 0, byte_3, 0, byte_1.length);
+        System.arraycopy(byte_2, 0, byte_3, byte_1.length, byte_2.length);
+        return byte_3;
     }
 
     /**
