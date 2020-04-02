@@ -32,6 +32,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.TextToSpeechActivity" />
+        <activity android:name=".activity.MediaRecorderActivity" />
     </application>
 
 </manifest>

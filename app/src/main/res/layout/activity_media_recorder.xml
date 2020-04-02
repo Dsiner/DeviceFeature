@@ -7,45 +7,25 @@
 
     <com.d.lib.common.view.TitleLayout
         style="@style/lib_pub_title_style"
-        app:lib_pub_tl_middleText="DeviceFeature" />
+        app:lib_pub_tl_middleText="Media Recorder" />
 
     <Button
-        android:id="@+id/btn_text_to_speech"
+        android:id="@+id/btn_start"
         style="@style/lib_pub_btn_style"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginLeft="@dimen/lib_pub_dimen_margin"
         android:layout_marginTop="@dimen/lib_pub_dimen_margin"
         android:layout_marginRight="@dimen/lib_pub_dimen_margin"
-        android:text="Text to speech" />
+        android:text="Start" />
 
     <Button
-        android:id="@+id/btn_motion_detection"
+        android:id="@+id/btn_stop"
         style="@style/lib_pub_btn_style"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginLeft="@dimen/lib_pub_dimen_margin"
         android:layout_marginTop="@dimen/lib_pub_dimen_margin"
         android:layout_marginRight="@dimen/lib_pub_dimen_margin"
-        android:text="Motion Detection" />
-
-    <Button
-        android:id="@+id/btn_nfc"
-        style="@style/lib_pub_btn_style"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="@dimen/lib_pub_dimen_margin"
-        android:layout_marginTop="@dimen/lib_pub_dimen_margin"
-        android:layout_marginRight="@dimen/lib_pub_dimen_margin"
-        android:text="NFC" />
-
-    <Button
-        android:id="@+id/btn_media_recorder"
-        style="@style/lib_pub_btn_style"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="@dimen/lib_pub_dimen_margin"
-        android:layout_marginTop="@dimen/lib_pub_dimen_margin"
-        android:layout_marginRight="@dimen/lib_pub_dimen_margin"
-        android:text="Media Recorder" />
+        android:text="Stop" />
 </LinearLayout>

@@ -1,10 +1,8 @@
 package com.d.devicefeature;
 
 import android.app.Application;
+import android.os.Environment;
 
-import com.d.lib.aster.Aster;
-import com.d.lib.aster.base.Config;
-import com.d.lib.aster.utils.SSLUtil;
 import com.d.lib.common.util.log.ULog;
 import com.d.lib.permissioncompat.support.PermissionSupport;
 
@@ -13,6 +11,9 @@ import com.d.lib.permissioncompat.support.PermissionSupport;
  * Created by D on 2018/3/3.
  */
 public class App extends Application {
+
+    public final static String PATH = Environment.getExternalStorageDirectory().getPath()
+            + "/DeviceFeature";
 
     @Override
     public void onCreate() {
