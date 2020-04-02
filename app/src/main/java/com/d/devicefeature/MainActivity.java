@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.d.devicefeature.activity.MediaRecorderActivity;
 import com.d.devicefeature.activity.NfcActivity;
+import com.d.devicefeature.activity.OcrActivity;
 import com.d.devicefeature.activity.TextToSpeechActivity;
 import com.d.lib.common.component.mvp.MvpBasePresenter;
 import com.d.lib.common.component.mvp.MvpView;
@@ -27,7 +28,7 @@ public class MainActivity extends BaseActivity<MvpBasePresenter> implements MvpV
             Manifest.permission.CAMERA};
 
     @OnClick({R.id.btn_text_to_speech, R.id.btn_motion_detection, R.id.btn_nfc,
-            R.id.btn_media_recorder})
+            R.id.btn_media_recorder, R.id.btn_ocr})
     public void onClickListener(View v) {
         switch (v.getId()) {
             case R.id.btn_text_to_speech:
@@ -44,6 +45,10 @@ public class MainActivity extends BaseActivity<MvpBasePresenter> implements MvpV
 
             case R.id.btn_media_recorder:
                 startActivity(new Intent(MainActivity.this, MediaRecorderActivity.class));
+                break;
+
+            case R.id.btn_ocr:
+                startActivity(new Intent(MainActivity.this, OcrActivity.class));
                 break;
         }
     }

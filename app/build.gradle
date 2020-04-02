@@ -32,6 +32,7 @@ dependencies {
     implementation project(':lib_text_to_speech')
     implementation project(':lib_motion_detection')
     implementation project(':lib_media_recorder')
+    implementation project(':lib_ocr')
 
     annotationProcessor "com.jakewharton:butterknife-compiler:8.8.1"
     annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0'

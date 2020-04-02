@@ -1,6 +1,7 @@
-include ':app', ':lib_text_to_speech', ':lib_motion_detection', ':lib_nfc',
+include ':app', ':lib_text_to_speech', ':lib_motion_detection', ':lib_nfc', ':lib_ocr',
         ':lib_common',
         ':lib_nfc',
         ':lib_text_to_speech',
         ':lib_motion_detection',
-        'lib_media_recorder'
+        'lib_media_recorder',
+        'lib_ocr'

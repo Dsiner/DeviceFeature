@@ -48,4 +48,14 @@
         android:layout_marginTop="@dimen/lib_pub_dimen_margin"
         android:layout_marginRight="@dimen/lib_pub_dimen_margin"
         android:text="Media Recorder" />
+
+    <Button
+        android:id="@+id/btn_ocr"
+        style="@style/lib_pub_btn_style"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="@dimen/lib_pub_dimen_margin"
+        android:layout_marginTop="@dimen/lib_pub_dimen_margin"
+        android:layout_marginRight="@dimen/lib_pub_dimen_margin"
+        android:text="OCR" />
 </LinearLayout>
