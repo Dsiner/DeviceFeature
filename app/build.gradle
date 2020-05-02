@@ -27,13 +27,12 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
-    implementation project(':lib_common')
     implementation project(':lib_nfc')
     implementation project(':lib_text_to_speech')
     implementation project(':lib_motion_detection')
     implementation project(':lib_media_recorder')
     implementation project(':lib_ocr')
 
-    annotationProcessor "com.jakewharton:butterknife-compiler:8.8.1"
+    implementation 'com.dsiner.lib:common:1.0.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0'
 }

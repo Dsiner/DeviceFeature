@@ -17,6 +17,7 @@ import com.d.lib.common.component.mvp.MvpBasePresenter;
 import com.d.lib.common.component.mvp.MvpView;
 import com.d.lib.common.component.mvp.app.BaseActivity;
 import com.d.lib.common.util.UriUtil;
+import com.d.lib.common.util.ViewHelper;
 import com.d.lib.devicefeature.ocr.OcrAssetUtils;
 import com.d.lib.devicefeature.ocr.OcrUtils;
 import com.d.lib.taskscheduler.TaskScheduler;
@@ -27,24 +28,21 @@ import com.d.lib.taskscheduler.schedule.Schedulers;
 
 import java.io.File;
 
-import butterknife.BindView;
-import butterknife.OnClick;
-
-public class OcrActivity extends BaseActivity<MvpBasePresenter> implements MvpView {
+public class OcrActivity extends BaseActivity<MvpBasePresenter>
+        implements MvpView, View.OnClickListener {
     private static final int REQUEST_PICK_IMAGE = 1001;
 
-    @BindView(R.id.iv_original)
     ImageView iv_original;
-    @BindView(R.id.tv_result)
     TextView tv_result;
 
-    @OnClick({R.id.btn_choose_image, R.id.btn_recognition})
-    public void onClickListener(View v) {
+    @Override
+    public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_choose_image:
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                     Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-                    intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                    intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                            "image/*");
                     intent.addCategory(Intent.CATEGORY_OPENABLE);
                     startActivityForResult(intent, REQUEST_PICK_IMAGE);
                 } else {
@@ -113,6 +111,16 @@ public class OcrActivity extends BaseActivity<MvpBasePresenter> implements MvpVi
     @Override
     protected MvpView getMvpView() {
         return this;
+    }
+
+    @Override
+    protected void bindView() {
+        super.bindView();
+        iv_original = ViewHelper.findView(this, R.id.iv_original);
+        tv_result = ViewHelper.findView(this, R.id.tv_result);
+
+        ViewHelper.setOnClick(this, this, R.id.btn_choose_image,
+                R.id.btn_recognition);
     }
 
     @Override

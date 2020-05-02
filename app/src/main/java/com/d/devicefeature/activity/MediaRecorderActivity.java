@@ -7,19 +7,19 @@ import com.d.devicefeature.R;
 import com.d.lib.common.component.mvp.MvpBasePresenter;
 import com.d.lib.common.component.mvp.MvpView;
 import com.d.lib.common.component.mvp.app.BaseActivity;
+import com.d.lib.common.util.ViewHelper;
 import com.d.lib.mediarecorder.audio.MP3Recorder;
 
 import java.io.File;
 import java.io.IOException;
 
-import butterknife.OnClick;
-
-public class MediaRecorderActivity extends BaseActivity<MvpBasePresenter> implements MvpView {
+public class MediaRecorderActivity extends BaseActivity<MvpBasePresenter>
+        implements MvpView, View.OnClickListener {
 
     private MP3Recorder mMP3Recorder;
 
-    @OnClick({R.id.btn_start, R.id.btn_stop})
-    public void onClickListener(View v) {
+    @Override
+    public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_start:
                 try {
@@ -47,6 +47,12 @@ public class MediaRecorderActivity extends BaseActivity<MvpBasePresenter> implem
     @Override
     protected MvpView getMvpView() {
         return this;
+    }
+
+    @Override
+    protected void bindView() {
+        super.bindView();
+        ViewHelper.setOnClick(this, this, R.id.btn_start, R.id.btn_stop);
     }
 
     @Override

@@ -14,15 +14,14 @@ import com.d.lib.devicefeature.texttospeech.TextToSpeechCompat;
 
 import java.util.Locale;
 
-import butterknife.OnClick;
-
-public class TextToSpeechActivity extends BaseActivity<MvpBasePresenter> implements MvpView {
+public class TextToSpeechActivity extends BaseActivity<MvpBasePresenter>
+        implements MvpView, View.OnClickListener {
 
     // TTS
     private TextToSpeechCompat mTextToSpeechCompat;
 
-    @OnClick({R.id.btn_read_aloud})
-    public void onClickListener(View v) {
+    @Override
+    public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_read_aloud:
                 EditText et_text = ViewHelper.findView(this, R.id.et_text);
@@ -45,6 +44,12 @@ public class TextToSpeechActivity extends BaseActivity<MvpBasePresenter> impleme
     @Override
     protected MvpView getMvpView() {
         return this;
+    }
+
+    @Override
+    protected void bindView() {
+        super.bindView();
+        ViewHelper.setOnClick(this, this, R.id.btn_read_aloud);
     }
 
     @Override
